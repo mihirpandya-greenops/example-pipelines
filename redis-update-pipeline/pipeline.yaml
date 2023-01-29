@@ -8,7 +8,7 @@ spec:
     - name: entry
       dag:
         tasks:
-          - name: add
+          - name: add-key
             templateRef:
               name: redis-add-key
               template: redis-add-key
@@ -22,7 +22,7 @@ spec:
                   value: "{{workflow.parameters.add-host}}"
                 - name: port
                   value: "{{workflow.parameters.add-port}}"
-          - name: delete
+          - name: delete-key
             templateRef:
               name: redis-delete-key
               template: redis-delete-key
