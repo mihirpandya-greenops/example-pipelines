@@ -1,0 +1,31 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Workflow
+metadata:
+  generateName: terraform
+spec:
+  entrypoint: entry
+  templates:
+    - name: entry
+      dag:
+        tasks:
+          - name: github-fetch-file
+            templateRef:
+              name: github-fetch-file
+              template: github-fetch-file
+            arguments:
+              parameters:
+                - name: github-repo
+                  value: "{{workflow.parameters.github-fetch-file-github-repo}}"
+                - name: path-to-file
+                  value: "{{workflow.parameters.github-fetch-file-path-to-file}}"
+                - name: github-credentials-secret
+                  value: "{{workflow.parameters.github-fetch-file-github-credentials-secret}}"
+          - name: terraform-plan-apply
+            templateRef:
+              name: terraform-plan-apply
+              template: terraform-plan-apply
+            dependencies: [github-fetch-file]
+            arguments:
+              parameters:
+                - name: config
+                  value: "{{tasks.github-fetch-file.outputs.parameters.file-contents}}"
