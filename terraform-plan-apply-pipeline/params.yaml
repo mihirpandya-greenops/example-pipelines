@@ -1,0 +1,10 @@
+arguments:
+  parameters:
+    - name: github-fetch-file-github-repo
+      value: mihirpandya-greenops/example-pipelines
+    - name: github-fetch-file-path-to-file
+      value: terraform-plan-apply-pipeline/terraform-kuber.tf
+    - name: github-fetch-file-github-credentials-secret
+      value: github-pat
+    - name: terraform-plan-config
+      value: output-github-fetch-file/parameters/file-contents
