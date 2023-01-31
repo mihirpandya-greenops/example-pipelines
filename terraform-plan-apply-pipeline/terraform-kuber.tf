@@ -4,7 +4,7 @@ provider "kubernetes" {
 resource "kubernetes_ingress_v1" "minio_ingress" {
   metadata {
     name = "mino-ingress"
-    namespace = "argo"
+    namespace = "dev"
     annotations = {
       "nginx.ingress.kubernetes.io/rewrite-target" = "/$1"
     }
