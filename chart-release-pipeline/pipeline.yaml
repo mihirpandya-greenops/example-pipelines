@@ -36,8 +36,8 @@ spec:
           - name: github-branch
             value: "{{workflow.parameters.create-pr-with-changes-github-branch}}"
           - name: image-names
-            value: "{{tasks.fetch-new-image-info.outputs.parameters.image-names}}"
+            value: "{{tasks.fetch-new-image-info.outputs.parameters.image-names-list}}"
           - name: updated-revisions
-            value: "{{tasks.fetch-new-image-info.outputs.parameters.updated-revisions}}"
+            value: "{{tasks.fetch-new-image-info.outputs.parameters.updated-revisions-list}}"
           - name: github-credentials-secret
             value: "{{workflow.parameters.create-pr-with-changes-github-credentials-secret}}"
