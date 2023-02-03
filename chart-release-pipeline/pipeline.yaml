@@ -1,7 +1,7 @@
 apiVersion: argoproj.io/v1alpha1
 kind: Workflow
 metadata:
-  generateName: release-new-charts
+  generateName: release-new-chart
 spec:
   entrypoint: entry
   templates:
@@ -20,3 +20,24 @@ spec:
             value: "{{workflow.parameters.fetch-new-image-info-organization}}"
           - name: token-secret-name
             value: "{{workflow.parameters.fetch-new-image-info-token-secret-name}}"
+      - name: create-pr-with-changes
+        templateRef:
+          name: github-pr
+          template: pr
+        dependencies: [fetch-new-image-info]
+        arguments:
+          parameters:
+          - name: pr-prefix-name
+            value: "{{workflow.parameters.create-pr-with-changes-pr-prefix-name}}"
+          - name: github-repo
+            value: "{{workflow.parameters.create-pr-with-changes-github-repo}}"
+          - name: path-to-file
+            value: "{{workflow.parameters.create-pr-with-changes-path-to-file}}"
+          - name: github-branch
+            value: "{{workflow.parameters.create-pr-with-changes-github-branch}}"
+          - name: image-names
+            value: "{{tasks.create-pr-with-changes.outputs.parameters.image-names}}"
+          - name: updated-revisions
+            value: "{{tasks.create-pr-with-changes.outputs.parameters.updated-revisions}}"
+          - name: github-credentials-secret
+            value: "{{workflow.parameters.create-pr-with-changes-github-credentials-secret}}"
