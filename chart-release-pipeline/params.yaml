@@ -6,3 +6,17 @@ arguments:
       value: greenopsinc
     - name: fetch-new-image-info-token-secret-name
       value: dockerhub-auth-secret
+    - name: create-pr-with-changes-pr-prefix-name
+      value: new-release
+    - name: create-pr-with-changes-github-repo
+      value: mihirpandya-greenops/helm-chart-copy
+    - name: create-pr-with-changes-path-to-file
+      value: greenops/values.yaml
+    - name: create-pr-with-changes-github-branch
+      value: main
+    - name: create-pr-with-changes-image-names
+      value: output-fetch-new-image-info/parameters/image-names-list
+    - name: create-pr-with-changes-updated-revisions
+      value: output-fetch-new-image-info/parameters/image-tags-list
+    - name: create-pr-with-changes-github-credentials-secret
+      value: github-pat
