@@ -38,6 +38,6 @@ spec:
           - name: image-names
             value: "{{tasks.fetch-new-image-info.outputs.parameters.image-names-list}}"
           - name: updated-revisions
-            value: "{{tasks.fetch-new-image-info.outputs.parameters.updated-revisions-list}}"
+            value: "{{tasks.fetch-new-image-info.outputs.parameters.image-tags-list}}"
           - name: github-credentials-secret
             value: "{{workflow.parameters.create-pr-with-changes-github-credentials-secret}}"
