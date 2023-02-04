@@ -11,6 +11,11 @@ spec:
         parameters:
         - name: image-names
         - name: image-tags
+      outputs:
+        parameters:
+        - name: release-version
+          valueFrom:
+            path: release-version.txt
       script:
         image: docker.io/greenopsinc/pygithub
         command: [python]
