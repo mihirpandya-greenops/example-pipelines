@@ -19,5 +19,6 @@ spec:
           image_tags = {{inputs.parameters.image-tags}}
           for idx in range(len(image_names)):
             if image_names[idx].startswith("greenopsinc/go"):
-              print(image_tags[idx])
+              with open('release-version.txt', 'w') as file:
+                file.write(image_tags[idx])
               break
