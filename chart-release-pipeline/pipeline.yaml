@@ -28,9 +28,9 @@ spec:
         arguments:
           parameters:
           - name: image-names
-            value: "{{tasks.fetch-new-images.outputs.parameters.image-names}}"
+            value: "{{tasks.fetch-new-images.outputs.parameters.image-names-list}}"
           - name: image-tags
-            value: "{{tasks.fetch-new-images.outputs.parameters.image-tags}}"
+            value: "{{tasks.fetch-new-images.outputs.parameters.image-tags-list}}"
       - name: create-new-branch
         templateRef:
           name: github-pr
@@ -47,9 +47,9 @@ spec:
           - name: github-branch
             value: "{{workflow.parameters.create-new-branch-github-branch}}"
           - name: image-names
-            value: "{{tasks.fetch-new-images.outputs.parameters.image-names}}"
+            value: "{{tasks.fetch-new-images.outputs.parameters.image-names-list}}"
           - name: updated-revisions
-            value: "{{tasks.fetch-new-images.outputs.parameters.updated-revisions}}"
+            value: "{{tasks.fetch-new-images.outputs.parameters.image-tags-list}}"
           - name: github-credentials-secret
             value: "{{workflow.parameters.create-new-branch-github-credentials-secret}}"
       - name: update-argo-app
