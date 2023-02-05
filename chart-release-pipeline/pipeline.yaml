@@ -52,22 +52,21 @@ spec:
             value: "{{tasks.fetch-new-images.outputs.parameters.image-tags-list}}"
           - name: github-credentials-secret
             value: "{{workflow.parameters.create-new-branch-github-credentials-secret}}"
-      - name: update-argo-app
+      - name: deploy-revision
         templateRef:
-          name: argocd-update
+          name: argocd-step
           template: argocd-sync-and-wait
-        dependencies: [create-new-branch]
         arguments:
           parameters:
           - name: argocd-version
-            value: "{{workflow.parameters.update-argo-app-argocd-version}}"
+            value: "{{workflow.parameters.deploy-revision-argocd-version}}"
           - name: application-name
-            value: "{{workflow.parameters.update-argo-app-application-name}}"
+            value: "{{workflow.parameters.deploy-revision-application-name}}"
           - name: revision
             value: "{{tasks.decide-new-release-name.outputs.parameters.release-version}}"
           - name: flags
-            value: "{{workflow.parameters.update-argo-app-flags}}"
+            value: "{{workflow.parameters.deploy-revision-flags}}"
           - name: argocd-server-address
-            value: "{{workflow.parameters.update-argo-app-argocd-server-address}}"
+            value: "{{workflow.parameters.deploy-revision-argocd-server-address}}"
           - name: argocd-credentials-secret
-            value: "{{workflow.parameters.update-argo-app-argocd-credentials-secret}}"
+            value: "{{workflow.parameters.deploy-revision-argocd-credentials-secret}}"
