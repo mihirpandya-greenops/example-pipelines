@@ -17,7 +17,7 @@ arguments:
     - name: create-new-branch-path-to-file
       value: guestbook/guestbook-ui-deployment.yaml
     - name: create-new-branch-github-branch
-      value: main
+      value: master
     - name: create-new-branch-image-names
       value: output-fetch-new-images/parameters/image-names-list
     - name: create-new-branch-updated-revisions
