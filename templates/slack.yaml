@@ -15,7 +15,7 @@ spec:
           - name: message
       script:
         image: curlimages/curl:7.69.1
-        command: [ bash ]
+        command: [ /bin/sh ]
         env:
           - name: WEBHOOK_TOKEN
             valueFrom:
