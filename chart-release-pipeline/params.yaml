@@ -13,9 +13,9 @@ arguments:
     - name: create-new-branch-branch-name
       value: output-decide-new-release-name/parameters/release-version
     - name: create-new-branch-github-repo
-      value: mihirpandya-greenops/helm-chart-copy
+      value: mihirpandya-greenops/argocd-example-apps
     - name: create-new-branch-path-to-file
-      value: greenops/values.yaml
+      value: guestbook/guestbook-ui-deployment.yaml
     - name: create-new-branch-github-branch
       value: main
     - name: create-new-branch-image-names
