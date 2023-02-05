@@ -1,0 +1,19 @@
+apiVersion: argoproj.io/v1alpha1
+kind: WorkflowTemplate
+metadata:
+  name: example-test
+spec:
+  templates:
+  - name: example-test
+    inputs: 
+      parameters: 
+      - name: succeed
+        value: true
+    script:
+      image: alpine:latest
+      command: [/bin/bash]
+      source: |
+        if [ "{{inputs.parameters.succeed}}" == "false" ]
+        then
+          exit 1
+        fi
