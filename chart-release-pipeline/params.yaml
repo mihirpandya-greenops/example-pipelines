@@ -33,6 +33,6 @@ arguments:
     - name: update-argo-app-flags
       value: --
     - name: update-argo-app-argocd-server-address
-      value: ""
+      value: argo-cd-argocd-server.argocd.svc.cluster.local:80
     - name: update-argo-app-argocd-credentials-secret
       value: argocd-user
