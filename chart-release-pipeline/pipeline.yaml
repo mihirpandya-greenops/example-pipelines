@@ -1,43 +1,73 @@
 apiVersion: argoproj.io/v1alpha1
 kind: Workflow
 metadata:
-  generateName: release-new-chart
+  generateName: release-chart
 spec:
   entrypoint: entry
   templates:
   - name: entry
     dag:
       tasks:
-      - name: fetch-new-image-info
+      - name: fetch-new-images
         templateRef:
           name: fetch-image-tags
           template: dockerhub
         arguments:
           parameters:
           - name: username
-            value: "{{workflow.parameters.fetch-new-image-info-username}}"
+            value: "{{workflow.parameters.fetch-new-images-username}}"
           - name: organization
-            value: "{{workflow.parameters.fetch-new-image-info-organization}}"
+            value: "{{workflow.parameters.fetch-new-images-organization}}"
           - name: token-secret-name
-            value: "{{workflow.parameters.fetch-new-image-info-token-secret-name}}"
-      - name: create-pr-with-changes
+            value: "{{workflow.parameters.fetch-new-images-token-secret-name}}"
+      - name: decide-new-release-name
         templateRef:
-          name: github-pr
-          template: pr
-        dependencies: [fetch-new-image-info]
+          name: misc
+          template: decide-release-version
+        dependencies: [fetch-new-images]
         arguments:
           parameters:
-          - name: pr-prefix-name
-            value: "{{workflow.parameters.create-pr-with-changes-pr-prefix-name}}"
-          - name: github-repo
-            value: "{{workflow.parameters.create-pr-with-changes-github-repo}}"
-          - name: path-to-file
-            value: "{{workflow.parameters.create-pr-with-changes-path-to-file}}"
-          - name: github-branch
-            value: "{{workflow.parameters.create-pr-with-changes-github-branch}}"
           - name: image-names
-            value: "{{tasks.fetch-new-image-info.outputs.parameters.image-names-list}}"
+            value: "{{tasks.decide-new-release-name.outputs.parameters.image-names}}"
+          - name: image-tags
+            value: "{{tasks.decide-new-release-name.outputs.parameters.image-tags}}"
+      - name: create-new-branch
+        templateRef:
+          name: github-pr
+          template: create-branch-with-new-release
+        dependencies: [decide-new-release-name]
+        arguments:
+          parameters:
+          - name: branch-name
+            value: "{{tasks.create-new-branch.outputs.parameters.branch-name}}"
+          - name: github-repo
+            value: "{{workflow.parameters.create-new-branch-github-repo}}"
+          - name: path-to-file
+            value: "{{workflow.parameters.create-new-branch-path-to-file}}"
+          - name: github-branch
+            value: "{{workflow.parameters.create-new-branch-github-branch}}"
+          - name: image-names
+            value: "{{tasks.create-new-branch.outputs.parameters.image-names}}"
           - name: updated-revisions
-            value: "{{tasks.fetch-new-image-info.outputs.parameters.image-tags-list}}"
+            value: "{{tasks.create-new-branch.outputs.parameters.updated-revisions}}"
           - name: github-credentials-secret
-            value: "{{workflow.parameters.create-pr-with-changes-github-credentials-secret}}"
+            value: "{{workflow.parameters.create-new-branch-github-credentials-secret}}"
+      - name: update-argo-app
+        templateRef:
+          name: argocd-update
+          template: argocd-sync-and-wait
+        dependencies: [create-new-branch]
+        arguments:
+          parameters:
+          - name: argocd-version
+            value: "{{workflow.parameters.update-argo-app-argocd-version}}"
+          - name: application-name
+            value: "{{workflow.parameters.update-argo-app-application-name}}"
+          - name: revision
+            value: "{{tasks.update-argo-app.outputs.parameters.revision}}"
+          - name: flags
+            value: "{{workflow.parameters.update-argo-app-flags}}"
+          - name: argocd-server-address
+            value: "{{workflow.parameters.update-argo-app-argocd-server-address}}"
+          - name: argocd-credentials-secret
+            value: "{{workflow.parameters.update-argo-app-argocd-credentials-secret}}"
