@@ -85,7 +85,7 @@ spec:
           name: github-wait
           template: pr-with-existing-branch
         dependencies: [deploy-revision]
-        when: "{{tasks.deploy-revision.outputs.parameters.greenops-argocd-info}} == Succeeded"
+        when: "{{tasks.deploy-revision.status}} == Succeeded"
         arguments:
           parameters:
           - name: branch-name
