@@ -3,7 +3,7 @@ arguments:
     - name: fetch-new-images-username
       value: 1mihirpandya
     - name: fetch-new-images-organization
-      value: greenopsinc
+      value: 1mihirpandya
     - name: fetch-new-images-token-secret-name
       value: dockerhub-auth-secret
     - name: decide-new-release-name-image-names
