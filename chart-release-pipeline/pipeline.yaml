@@ -13,7 +13,6 @@ spec:
         templateRef:
           name: slack
           template: slack-send-message
-        dependencies: [run-tests]
         when: "{{workflow.status}} != Succeeded"
         arguments:
           parameters:
