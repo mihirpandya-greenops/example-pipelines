@@ -38,6 +38,12 @@ arguments:
       value: argocd-user
     - name: run-tests-succeed
       value: true
+    - name: send-failure-message-webhook-url
+      value: https://hooks.slack.com/services/T02FT1S6X62/B03TM27514K
+    - name: send-failure-message-webhook-token-secret
+      value: slack-secret
+    - name: send-failure-message-message
+      value: "Tests for new release failed."
     - name: create-and-wait-for-pr-github-repo
       value: mihirpandya-greenops/argocd-example-apps
     - name: create-and-wait-for-pr-github-branch
