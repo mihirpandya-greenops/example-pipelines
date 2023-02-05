@@ -24,15 +24,15 @@ arguments:
       value: output-fetch-new-images/parameters/image-tags-list
     - name: create-new-branch-github-credentials-secret
       value: github-pat
-    - name: update-argo-app-argocd-version
+    - name: deploy-revision-argocd-version
       value: v2.0.5
-    - name: update-argo-app-application-name
-      value: test-app
-    - name: update-argo-app-revision
-      value: output-decide-new-release-name/parameters/release-version
-    - name: update-argo-app-flags
+    - name: deploy-revision-application-name
+      value: guestbook-app
+    - name: deploy-revision-revision
+      value: master
+    - name: deploy-revision-flags
       value: --
-    - name: update-argo-app-argocd-server-address
-      value: argo-cd-argocd-server.argocd.svc.cluster.local:80
-    - name: update-argo-app-argocd-credentials-secret
+    - name: deploy-revision-argocd-server-address
+      value: argocd.greenops.io
+    - name: deploy-revision-argocd-credentials-secret
       value: argocd-user
