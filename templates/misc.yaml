@@ -23,7 +23,7 @@ spec:
           image_names = {{inputs.parameters.image-names}}
           image_tags = {{inputs.parameters.image-tags}}
           for idx in range(len(image_names)):
-            if image_names[idx].startswith("greenopsinc/go"):
+            if image_names[idx].startswith("1mihirpandya/ks-guestbook-demo"):
               with open('release-version.txt', 'w') as file:
                 file.write(image_tags[idx])
               break
