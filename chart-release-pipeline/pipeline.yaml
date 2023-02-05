@@ -28,9 +28,9 @@ spec:
         arguments:
           parameters:
           - name: image-names
-            value: "{{tasks.decide-new-release-name.outputs.parameters.image-names}}"
+            value: "{{tasks.fetch-new-images.outputs.parameters.image-names}}"
           - name: image-tags
-            value: "{{tasks.decide-new-release-name.outputs.parameters.image-tags}}"
+            value: "{{tasks.fetch-new-images.outputs.parameters.image-tags}}"
       - name: create-new-branch
         templateRef:
           name: github-pr
