@@ -71,12 +71,21 @@ spec:
             value: "{{workflow.parameters.deploy-revision-argocd-server-address}}"
           - name: argocd-credentials-secret
             value: "{{workflow.parameters.deploy-revision-argocd-credentials-secret}}"
+#       - name: run-tests
+#         templateRef:
+#           name: example-test
+#           template: example-test
+#         dependencies: [deploy-revision]
+#         arguments:
+#           parameters:
+#           - name: succeed
+#             value: "{{workflow.parameters.run-tests-succeed}}"
       - name: create-and-wait-for-pr
         templateRef:
           name: github-wait
           template: pr-with-existing-branch
         dependencies: [deploy-revision]
-        when: "{{tasks.deploy-revision.status}} = Succeeded"
+        when: "{{tasks.deploy-revision.outputs.parameters.greenops-argocd-info}} == Succeeded"
         arguments:
           parameters:
           - name: branch-name
