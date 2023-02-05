@@ -14,7 +14,7 @@ spec:
           - name: webhook-token-secret
           - name: message
       script:
-        image: curlimages:curl
+        image: curlimages/curl:7.69.1
         command: [ bash ]
         env:
           - name: WEBHOOK_TOKEN
