@@ -36,6 +36,8 @@ arguments:
       value: argocd.greenops.io
     - name: deploy-revision-argocd-credentials-secret
       value: argocd-user
+    - name: run-tests-succeed
+      value: true
     - name: create-and-wait-for-pr-github-repo
       value: mihirpandya-greenops/argocd-example-apps
     - name: create-and-wait-for-pr-github-branch
