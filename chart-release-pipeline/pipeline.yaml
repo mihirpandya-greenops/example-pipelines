@@ -4,7 +4,25 @@ metadata:
   generateName: release-chart
 spec:
   entrypoint: entry
+  onExit: exit-handler
   templates:
+  - name: exit-handler
+    dag:
+      tasks:
+      - name: send-failure-message
+        templateRef:
+          name: slack
+          template: slack-send-message
+        dependencies: [run-tests]
+        when: "{{workflow.status}} != Succeeded"
+        arguments:
+          parameters:
+          - name: webhook-url
+            value: "{{workflow.parameters.send-failure-message-webhook-url}}"
+          - name: webhook-token-secret
+            value: "{{workflow.parameters.send-failure-message-webhook-token-secret}}"
+          - name: message
+            value: "{{workflow.parameters.send-failure-message-message}}"
   - name: entry
     dag:
       tasks:
@@ -80,20 +98,6 @@ spec:
           parameters:
           - name: succeed
             value: "{{workflow.parameters.run-tests-succeed}}"
-      - name: send-failure-message
-        templateRef:
-          name: slack
-          template: slack-send-message
-        dependencies: [run-tests]
-        when: "{{tasks.run-tests.status}} != Succeeded"
-        arguments:
-          parameters:
-          - name: webhook-url
-            value: "{{workflow.parameters.send-failure-message-webhook-url}}"
-          - name: webhook-token-secret
-            value: "{{workflow.parameters.send-failure-message-webhook-token-secret}}"
-          - name: message
-            value: "{{workflow.parameters.send-failure-message-message}}"
       - name: create-and-wait-for-pr
         templateRef:
           name: github-wait
