@@ -38,7 +38,7 @@ arguments:
       value: argocd-user
     - name: create-and-wait-for-pr-github-repo
       value: mihirpandya-greenops/argocd-example-apps
-    - name: create-and-wait-for-pr-github-repo
+    - name: create-and-wait-for-pr-github-branch
       value: master
-    - name: create-and-wait-for-pr-github-repo
+    - name: create-and-wait-for-pr-github-credentials-secret
       value: github-pat
