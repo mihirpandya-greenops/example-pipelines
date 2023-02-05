@@ -1,22 +1,38 @@
 arguments:
   parameters:
-    - name: fetch-new-image-info-username
+    - name: fetch-new-images-username
       value: 1mihirpandya
-    - name: fetch-new-image-info-organization
+    - name: fetch-new-images-organization
       value: greenopsinc
-    - name: fetch-new-image-info-token-secret-name
+    - name: fetch-new-images-token-secret-name
       value: dockerhub-auth-secret
-    - name: create-pr-with-changes-pr-prefix-name
-      value: new-release
-    - name: create-pr-with-changes-github-repo
+    - name: decide-new-release-name-image-names
+      value: output-fetch-new-images/parameters/image-names-list
+    - name: decide-new-release-name-image-tags
+      value: output-fetch-new-images/parameters/image-tags-list
+    - name: create-new-branch-branch-name
+      value: output-decide-new-release-name/parameters/release-version
+    - name: create-new-branch-github-repo
       value: mihirpandya-greenops/helm-chart-copy
-    - name: create-pr-with-changes-path-to-file
+    - name: create-new-branch-path-to-file
       value: greenops/values.yaml
-    - name: create-pr-with-changes-github-branch
+    - name: create-new-branch-github-branch
       value: main
-    - name: create-pr-with-changes-image-names
-      value: output-fetch-new-image-info/parameters/image-names-list
-    - name: create-pr-with-changes-updated-revisions
-      value: output-fetch-new-image-info/parameters/image-tags-list
-    - name: create-pr-with-changes-github-credentials-secret
+    - name: create-new-branch-image-names
+      value: output-fetch-new-images/parameters/image-names-list
+    - name: create-new-branch-updated-revisions
+      value: output-fetch-new-images/parameters/image-tags-list
+    - name: create-new-branch-github-credentials-secret
       value: github-pat
+    - name: update-argo-app-argocd-version
+      value: v2.0.5
+    - name: update-argo-app-application-name
+      value: test-app
+    - name: update-argo-app-revision
+      value: output-decide-new-release-name/parameters/release-version
+    - name: update-argo-app-flags
+      value: --
+    - name: update-argo-app-argocd-server-address
+      value: ""
+    - name: update-argo-app-argocd-credentials-secret
+      value: argocd-user
