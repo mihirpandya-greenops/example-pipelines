@@ -11,7 +11,7 @@ spec:
         value: true
     script:
       image: alpine:latest
-      command: [/bin/bash]
+      command: [/bin/sh]
       source: |
         if [ "{{inputs.parameters.succeed}}" == "false" ]
         then
