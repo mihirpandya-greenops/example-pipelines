@@ -71,3 +71,19 @@ spec:
             value: "{{workflow.parameters.deploy-revision-argocd-server-address}}"
           - name: argocd-credentials-secret
             value: "{{workflow.parameters.deploy-revision-argocd-credentials-secret}}"
+      - name: create-and-wait-for-pr
+        templateRef:
+          name: github-wait
+          template: pr-with-existing-branch
+        dependencies: [deploy-revision]
+        when: "{{tasks.deploy-revision.status}} = Succeeded"
+        arguments:
+          parameters:
+          - name: branch-name
+            value: "{{tasks.decide-new-release-name.outputs.parameters.release-version}}"
+          - name: github-repo
+            value: "{{workflow.parameters.create-and-wait-for-pr-github-repo}}"
+          - name: github-branch
+            value: "{{workflow.parameters.create-and-wait-for-pr-github-branch}}"
+          - name: github-credentials-secret
+            value: "{{workflow.parameters.create-and-wait-for-pr-github-credentials-secret}}"
