@@ -36,3 +36,9 @@ arguments:
       value: argocd.greenops.io
     - name: deploy-revision-argocd-credentials-secret
       value: argocd-user
+    - name: create-and-wait-for-pr-github-repo
+      value: mihirpandya-greenops/argocd-example-apps
+    - name: create-and-wait-for-pr-github-repo
+      value: master
+    - name: create-and-wait-for-pr-github-repo
+      value: github-pat
