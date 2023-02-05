@@ -33,7 +33,7 @@ spec:
             value: "{{tasks.fetch-new-images.outputs.parameters.image-tags-list}}"
       - name: create-new-branch
         templateRef:
-          name: github-pr
+          name: github-wait
           template: create-branch-with-new-release
         dependencies: [decide-new-release-name]
         arguments:
