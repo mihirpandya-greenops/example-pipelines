@@ -37,7 +37,7 @@ arguments:
     - name: deploy-revision-argocd-credentials-secret
       value: argocd-user
     - name: run-tests-succeed
-      value: false
+      value: true
     - name: send-failure-message-webhook-url
       value: https://hooks.slack.com/services/T02FT1S6X62/B03TM27514K
     - name: send-failure-message-webhook-token-secret
