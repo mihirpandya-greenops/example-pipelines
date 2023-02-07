@@ -5,6 +5,8 @@ metadata:
 spec:
   entrypoint: entry
   templates:
+  - name: suspend-template
+    suspend: {}
   - name: k8s-deployment
     inputs:
       parameters:
@@ -93,8 +95,8 @@ spec:
           - name: revision
             value: "{{workflow.parameters.dev-revision}}"
       - name: approve
+        template: suspend-template
         dependencies: [deploy-to-dev-ec2, deploy-to-dev-k8s]
-        suspend: {}
       - name: deploy-to-staging-ec2
         template: ec2-deployment
         dependencies: [approve]
