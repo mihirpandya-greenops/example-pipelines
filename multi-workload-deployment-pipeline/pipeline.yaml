@@ -79,10 +79,10 @@ spec:
             value: "{{workflow.parameters.fetch-new-images-token-secret-name}}"
       - name: deploy-to-dev-ec2
         template: ec2-deployment
-        dependencies: [fetch-image-tags]
+        dependencies: [fetch-new-images]
       - name: deploy-to-dev-k8s
         template: k8s-deployment
-        dependencies: [fetch-image-tags]
+        dependencies: [fetch-new-images]
         arguments:
           parameters:
           - name: username
