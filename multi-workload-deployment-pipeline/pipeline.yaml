@@ -17,7 +17,7 @@ spec:
           - name: argocd-version
             value: "v2.0.5"
           - name: application-name
-            value: "{{workflow.parameters.deploy-revision-application-name}}"
+            value: "{{inputs.parameters.rev-application-name}}"
           - name: revision
             value: "main"
           - name: flags
@@ -84,12 +84,8 @@ spec:
         dependencies: [fetch-new-images]
         arguments:
           parameters:
-          - name: username
-            value: "{{workflow.parameters.fetch-new-images-username}}"
-          - name: organization
-            value: "{{workflow.parameters.fetch-new-images-organization}}"
-          - name: token-secret-name
-            value: "{{workflow.parameters.fetch-new-images-token-secret-name}}"
+          - name: rev-application-name
+            value: "{{workflow.parameters.dev-appname}}"
       - name: deploy-to-staging-ec2
         template: ec2-deployment
         dependencies: [deploy-to-dev-ec2, deploy-to-dev-k8s]
@@ -98,9 +94,5 @@ spec:
         dependencies: [deploy-to-dev-ec2, deploy-to-dev-k8s]
         arguments:
           parameters:
-          - name: username
-            value: "{{workflow.parameters.fetch-new-images-username}}"
-          - name: organization
-            value: "{{workflow.parameters.fetch-new-images-organization}}"
-          - name: token-secret-name
-            value: "{{workflow.parameters.fetch-new-images-token-secret-name}}"
+          - name: rev-application-name
+            value: "{{workflow.parameters.staging-appname}}"
