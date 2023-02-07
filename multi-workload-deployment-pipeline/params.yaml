@@ -12,3 +12,7 @@ arguments:
       value: guestbook-app-dev
     - name: staging-appname
       value: rollout-env4
+    - name: dev-revision
+      value: master
+    - name: staging-revision
+      value: main
