@@ -6,3 +6,5 @@ arguments:
       value: 1mihirpandya
     - name: fetch-new-images-token-secret-name
       value: dockerhub-auth-secret
+    - name: run-tests-succeed
+      value: true
