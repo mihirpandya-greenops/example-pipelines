@@ -9,6 +9,7 @@ spec:
     inputs:
       parameters:
         - name: rev-application-name
+        - name: revision
     dag:
       tasks:
       - name: k8s-deployment
@@ -22,7 +23,7 @@ spec:
           - name: application-name
             value: "{{inputs.parameters.rev-application-name}}"
           - name: revision
-            value: "main"
+            value: "{{inputs.parameters.revision}}"
           - name: flags
             value: "--"
           - name: argocd-server-address
@@ -89,6 +90,8 @@ spec:
           parameters:
           - name: rev-application-name
             value: "{{workflow.parameters.dev-appname}}"
+          - name: revision
+            value: "{{workflow.parameters.dev-revision}}"
       - name: deploy-to-staging-ec2
         template: ec2-deployment
         dependencies: [deploy-to-dev-ec2, deploy-to-dev-k8s]
@@ -99,3 +102,5 @@ spec:
           parameters:
           - name: rev-application-name
             value: "{{workflow.parameters.staging-appname}}"
+          - name: revision
+            value: "{{workflow.parameters.staging-revision}}"
