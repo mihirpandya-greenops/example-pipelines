@@ -1,0 +1,12 @@
+apiVersion: argoproj.io/v1alpha1
+kind: WorkflowTemplate
+metadata:
+  name: example-sn
+spec:
+  templates:
+  - name: generate-report
+    script:
+      image: python:alpine3.6
+      command: [python]
+      source: |
+        print("Generating ServiceNow report")
