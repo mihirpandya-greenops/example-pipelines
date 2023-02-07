@@ -6,6 +6,9 @@ spec:
   entrypoint: entry
   templates:
   - name: k8s-deployment
+    inputs:
+      parameters:
+        - name: rev-application-name
     dag:
       tasks:
       - name: k8s-deployment
