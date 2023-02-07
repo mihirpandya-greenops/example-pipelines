@@ -8,3 +8,7 @@ arguments:
       value: dockerhub-auth-secret
     - name: run-tests-succeed
       value: true
+    - name: dev-appname
+      value: guestbook-app-dev
+    - name: dev-appname
+      value: rollout-env4
