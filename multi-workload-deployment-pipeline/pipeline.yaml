@@ -4,9 +4,8 @@ metadata:
   generateName: release-chart
 spec:
   entrypoint: entry
-  onExit: exit-handler
   templates:
-  - name: exit-handler
+  - name: k8s-deployment
     dag:
       tasks:
       - name: k8s-deployment
