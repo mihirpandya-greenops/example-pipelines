@@ -1,0 +1,8 @@
+arguments:
+  parameters:
+    - name: fetch-new-images-username
+      value: 1mihirpandya
+    - name: fetch-new-images-organization
+      value: 1mihirpandya
+    - name: fetch-new-images-token-secret-name
+      value: dockerhub-auth-secret
