@@ -92,12 +92,15 @@ spec:
             value: "{{workflow.parameters.dev-appname}}"
           - name: revision
             value: "{{workflow.parameters.dev-revision}}"
+      - name: approve
+        dependencies: [deploy-to-dev-ec2, deploy-to-dev-k8s]
+        suspend: {}
       - name: deploy-to-staging-ec2
         template: ec2-deployment
-        dependencies: [deploy-to-dev-ec2, deploy-to-dev-k8s]
+        dependencies: [approve]
       - name: deploy-to-staging-k8s
         template: k8s-deployment
-        dependencies: [deploy-to-dev-ec2, deploy-to-dev-k8s]
+        dependencies: [approve]
         arguments:
           parameters:
           - name: rev-application-name
