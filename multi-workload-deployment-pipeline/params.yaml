@@ -10,5 +10,5 @@ arguments:
       value: true
     - name: dev-appname
       value: guestbook-app-dev
-    - name: dev-appname
+    - name: staging-appname
       value: rollout-env4
