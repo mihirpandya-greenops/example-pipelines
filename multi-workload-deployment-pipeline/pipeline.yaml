@@ -1,0 +1,107 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Workflow
+metadata:
+  generateName: release-chart
+spec:
+  entrypoint: entry
+  onExit: exit-handler
+  templates:
+  - name: exit-handler
+    dag:
+      tasks:
+      - name: k8s-deployment
+        templateRef:
+          name: argocd-step
+          template: argocd-sync-and-wait
+        arguments:
+          parameters:
+          - name: argocd-version
+            value: "v2.0.5"
+          - name: application-name
+            value: "{{workflow.parameters.deploy-revision-application-name}}"
+          - name: revision
+            value: "main"
+          - name: flags
+            value: "--"
+          - name: argocd-server-address
+            value: "argocd.greenops.io"
+          - name: argocd-credentials-secret
+            value: "argocd-user"
+      - name: run-tests
+        templateRef:
+          name: example-test
+          template: example-test
+        dependencies: [k8s-deployment]
+        arguments:
+          parameters:
+          - name: succeed
+            value: "{{workflow.parameters.run-tests-succeed}}"
+      - name: generate-servicenow-report
+        templateRef:
+          name: example-sn
+          template: generate-report
+        dependencies: [run-tests]
+  - name: ec2-deployment
+    dag:
+      tasks:
+      - name: ec2-deployment
+        templateRef:
+          name: ansible
+          template: run-ansible-playbook
+      - name: run-tests
+        templateRef:
+          name: example-test
+          template: example-test
+        dependencies: [ec2-deployment]
+        arguments:
+          parameters:
+          - name: succeed
+            value: "{{workflow.parameters.run-tests-succeed}}"
+      - name: generate-servicenow-report
+        templateRef:
+          name: example-sn
+          template: generate-report
+        dependencies: [run-tests]
+  - name: entry
+    dag:
+      tasks:
+      - name: fetch-new-images
+        templateRef:
+          name: fetch-image-tags
+          template: dockerhub
+        arguments:
+          parameters:
+          - name: username
+            value: "{{workflow.parameters.fetch-new-images-username}}"
+          - name: organization
+            value: "{{workflow.parameters.fetch-new-images-organization}}"
+          - name: token-secret-name
+            value: "{{workflow.parameters.fetch-new-images-token-secret-name}}"
+      - name: deploy-to-dev-ec2
+        template: ec2-deployment
+        dependencies: [fetch-image-tags]
+      - name: deploy-to-dev-k8s
+        template: k8s-deployment
+        dependencies: [fetch-image-tags]
+        arguments:
+          parameters:
+          - name: username
+            value: "{{workflow.parameters.fetch-new-images-username}}"
+          - name: organization
+            value: "{{workflow.parameters.fetch-new-images-organization}}"
+          - name: token-secret-name
+            value: "{{workflow.parameters.fetch-new-images-token-secret-name}}"
+      - name: deploy-to-staging-ec2
+        template: ec2-deployment
+        dependencies: [deploy-to-dev-ec2, deploy-to-dev-k8s]
+      - name: deploy-to-staging-k8s
+        template: k8s-deployment
+        dependencies: [deploy-to-dev-ec2, deploy-to-dev-k8s]
+        arguments:
+          parameters:
+          - name: username
+            value: "{{workflow.parameters.fetch-new-images-username}}"
+          - name: organization
+            value: "{{workflow.parameters.fetch-new-images-organization}}"
+          - name: token-secret-name
+            value: "{{workflow.parameters.fetch-new-images-token-secret-name}}"
