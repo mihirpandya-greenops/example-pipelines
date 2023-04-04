@@ -1,0 +1,26 @@
+arguments:
+  parameters:
+    - name: deploy-to-customer-1-argocd-version
+      value: v2.0.5
+    - name: deploy-to-customer-1-application-name
+      value: customer-1-deployment
+    - name: deploy-to-customer-1-revision
+      value: master
+    - name: deploy-to-customer-1-flags
+      value: --
+    - name: deploy-to-customer-1-argocd-server-address
+      value: cluster-5-argocd.greenops.io
+    - name: deploy-to-customer-1-argocd-credentials-secret
+      value: argocd-user
+    - name: deploy-to-customer-2-argocd-version
+      value: v2.0.5
+    - name: deploy-to-customer-2-application-name
+      value: customer-2-deployment
+    - name: deploy-to-customer-2-revision
+      value: master
+    - name: deploy-to-customer-2-flags
+      value: --
+    - name: deploy-to-customer-2-argocd-server-address
+      value: cluster-5-argocd.greenops.io
+    - name: deploy-to-customer-2-argocd-credentials-secret
+      value: argocd-user
