@@ -15,17 +15,17 @@ spec:
         arguments:
           parameters:
           - name: argocd-version
-            value: "{{workflow.parameters.deploy-to-dev-argocd-version}}"
+            value: "{{workflow.parameters.deploy-to-customer-1-argocd-version}}"
           - name: application-name
-            value: "{{workflow.parameters.deploy-to-dev-application-name}}"
+            value: "{{workflow.parameters.deploy-to-customer-1-application-name}}"
           - name: revision
-            value: "{{workflow.parameters.deploy-to-dev-revision}}"
+            value: "{{workflow.parameters.deploy-to-customer-1-revision}}"
           - name: flags
-            value: "{{workflow.parameters.deploy-to-dev-flags}}"
+            value: "{{workflow.parameters.deploy-to-customer-1-flags}}"
           - name: argocd-server-address
-            value: "{{workflow.parameters.deploy-to-dev-argocd-server-address}}"
+            value: "{{workflow.parameters.deploy-to-customer-1-argocd-server-address}}"
           - name: argocd-credentials-secret
-            value: "{{workflow.parameters.deploy-to-dev-argocd-credentials-secret}}"
+            value: "{{workflow.parameters.deploy-to-customer-1-argocd-credentials-secret}}"
       - name: deploy-to-customer-2
         templateRef:
           name: argocd-step
@@ -33,14 +33,14 @@ spec:
         arguments:
           parameters:
           - name: argocd-version
-            value: "{{workflow.parameters.deploy-to-staging-argocd-version}}"
+            value: "{{workflow.parameters.deploy-to-customer-2-argocd-version}}"
           - name: application-name
-            value: "{{workflow.parameters.deploy-to-staging-application-name}}"
+            value: "{{workflow.parameters.deploy-to-customer-2-application-name}}"
           - name: revision
-            value: "{{workflow.parameters.deploy-to-staging-revision}}"
+            value: "{{workflow.parameters.deploy-to-customer-2-revision}}"
           - name: flags
-            value: "{{workflow.parameters.deploy-to-staging-flags}}"
+            value: "{{workflow.parameters.deploy-to-customer-2-flags}}"
           - name: argocd-server-address
-            value: "{{workflow.parameters.deploy-to-staging-argocd-server-address}}"
+            value: "{{workflow.parameters.deploy-to-customer-2-argocd-server-address}}"
           - name: argocd-credentials-secret
-            value: "{{workflow.parameters.deploy-to-staging-argocd-credentials-secret}}"
+            value: "{{workflow.parameters.deploy-to-customer-2-argocd-credentials-secret}}"
