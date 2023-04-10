@@ -1,20 +1,16 @@
 apiVersion: argoproj.io/v1alpha1
 kind: CronWorkflow
 metadata:
-  generateName: test-cron
+  name: test-cron-wf
 spec:
   schedule: "* * * * *"
+  concurrencyPolicy: "Replace"
+  startingDeadlineSeconds: 0
   workflowSpec:
-    entrypoint: entry
+    entrypoint: whalesay
     templates:
-    - name: entry
-      dag:
-        tasks:
-        - name: app-check
-          templateRef:
-            name: application-check
-            template: application-check
-          arguments:
-            parameters:
-            - name: argocd-server-address
-              value: "{{workflow.parameters.app-check-argocd-server-address}}"
+    - name: whalesay
+      container:
+        image: alpine:3.6
+        command: [sh, -c]
+        args: ["date; sleep 90"]
