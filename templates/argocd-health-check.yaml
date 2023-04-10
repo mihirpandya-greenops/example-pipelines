@@ -1,0 +1,33 @@
+apiVersion: argoproj.io/v1alpha1
+kind: WorkflowTemplate
+metadata:
+  name: application-check
+spec:
+  templates:
+  - name: application-check
+    inputs: 
+      parameters: 
+      - name: ARGOCD_SERVER
+        value: greenops-cd-argocd-server.argocd.svc.cluster.local
+    script:
+      image: argoproj/argocd:2.0.5
+      command: [bash]
+      env:
+        - name: ARGOCD_USERNAME
+          valueFrom:
+            secretKeyRef:
+              name: "argocd-credentials-secret"
+              key: username
+        - name: ARGOCD_PASSWORD
+          valueFrom:
+            secretKeyRef:
+              name: "argocd-credentials-secret"
+              key: password
+        - name: ARGOCD_SERVER
+          value: "{{inputs.parameters.argocd-server-address}}"
+      source: |
+        argocd login "$ARGOCD_SERVER" --username=$ARGOCD_USERNAME --password=$ARGOCD_PASSWORD
+        health_status=$(argocd app get guestbook -o json | jq -r '.status.health.status')
+        if [[ health_status == "Missing" ]]; then
+            exit 1
+        fi
