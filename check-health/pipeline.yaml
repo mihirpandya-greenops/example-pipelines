@@ -1,0 +1,19 @@
+apiVersion: argoproj.io/v1alpha1
+kind: CronWorkflow
+metadata:
+  generateName: test-cron
+spec:
+  schedule: "* * * * *"
+  workflowSpec:
+    entrypoint: entry
+    - name: entry
+      dag:
+        tasks:
+      - name: app-check
+        templateRef:
+          name: application-check
+          template: application-check
+        arguments:
+          parameters:
+          - name: argocd-server-address
+            value: "{{workflow.parameters.app-check-argocd-server-address}}"
