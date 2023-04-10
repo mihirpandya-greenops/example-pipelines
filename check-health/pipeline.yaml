@@ -1,16 +1,29 @@
-apiVersion: argoproj.io/v1alpha1
-kind: CronWorkflow
 metadata:
-  name: test-cron-wf
+  name: omniscient-tiger
+  namespace: argo
+  labels:
+    example: 'true'
 spec:
-  schedule: "* * * * *"
-  concurrencyPolicy: "Replace"
-  startingDeadlineSeconds: 0
-  workflowSpec:
-    entrypoint: whalesay
-    templates:
-    - name: whalesay
+  arguments:
+    parameters:
+      - name: message
+        value: hello argo
+  entrypoint: argosay
+  templates:
+    - name: argosay
+      inputs:
+        parameters:
+          - name: message
+            value: '{{workflow.parameters.message}}'
       container:
-        image: alpine:3.6
-        command: [sh, -c]
-        args: ["date; sleep 90"]
+        name: main
+        image: argoproj/argosay:v2
+        command:
+          - /argosay
+        args:
+          - echo
+          - '{{inputs.parameters.message}}'
+  ttlStrategy:
+    secondsAfterCompletion: 300
+  podGC:
+    strategy: OnPodCompletion
