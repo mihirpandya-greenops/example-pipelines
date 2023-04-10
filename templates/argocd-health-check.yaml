@@ -7,7 +7,7 @@ spec:
   - name: application-check
     inputs: 
       parameters: 
-      - name: ARGOCD_SERVER
+      - name: argocd-server-address
         value: greenops-cd-argocd-server.argocd.svc.cluster.local
     script:
       image: argoproj/argocd:2.0.5
